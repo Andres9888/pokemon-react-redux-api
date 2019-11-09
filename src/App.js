@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import fetchPokemonAction from "./fetchpokemon";
+import {
+  getPokemonError,
+  getPokemon,
+  getPokemonLoading
+} from "./reducers/reducers";
+
+import PokemonList from "../src/components/container/PokemonList";
+import _ from "lodash";
+import "./App.css";
+
+class PokeApp extends Component {
+  increment = () => {
+    this.setState({ species: { ...this.state.species, count: 1 } });
+  };
+
+  componentWillMount() {
+    const { fetchPokemon } = this.props;
+    fetchPokemon();
+  }
+
+  render() {
+    const { pokemon, error, loading } = this.props;
+
+    return (
+      <div className="pokeapp">
+        <h1> The Kanto PokeDex! </h1>
+        <button onClick={this.increment}></button>
+        <PokemonList data={this.props} increment={this.increment} />
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  error: getPokemonError(state),
+  pokemon: getPokemon(state),
+  loading: getPokemonLoading(state)
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPokemon: fetchPokemonAction
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PokeApp);

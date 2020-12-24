@@ -6,4 +6,4 @@
 [[Click Here to View Playlist]https://www.youtube.com/playlist?list=PLC0KM3xw4Iyv7hMAUNhOLD9IO2l7bhMbZ)
 
 Live Site: pokemon.andresgutierrez.me
-[[Click here]http://pokemon.andresgutierrez.me)
+[[Click here]http://andresgutierrez.me/pokemon-react-redux-api)
